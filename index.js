@@ -1,17 +1,15 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-app.use(function (req, res, next) {
-  const date = new Date();
-  if (
-    date.getDay >= 1 &&
-    date.getDay <= 5 &&
-    date.getHours >= 9 &&
-    date.getHours <= 17
-  ) {
+
+app.use((req, res, next) => {
+  const time = new Date();
+  const day = time.getDay();
+  const hour = time.getHours();
+  if (day >= 1 && day <= 5 && hour >= 9 && hour <= 20) {
     next();
   } else {
-    res.send("<h1>Error</h1>");
+    res.status(404).sendFile(path.join(__dirname, "/My-app/404.html"));
   }
 });
 /// a3ml error page w res.send("<h1>Error</h1>") badelha b res.sendFile() w taw twali oumourk mnadhma
